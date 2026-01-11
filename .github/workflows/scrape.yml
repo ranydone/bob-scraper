@@ -1,0 +1,62 @@
+name: BOB E-Auction Scraper
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday 9 AM UTC (2:30 PM IST)
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - run: |
+        pip install playwright pandas openpyxl
+        playwright install chromium
+        playwright install-deps chromium
+    
+    - run: python automated_bob_scraper.py
+    
+    - uses: actions/upload-artifact@v3
+      with:
+        name: results
+        path: |
+          bob_automated_scrape.xlsx
+          bob_automated_scrape.csv
+          bob_automated_scrape.json
+```
+
+### **5. Click "Commit new file"**
+
+---
+
+## 📂 **FINAL STRUCTURE:**
+```
+bob-scraper/                           ← Your repository
+├── .github/                           ← Folder (created automatically)
+│   └── workflows/                     ← Folder (created automatically)
+│       └── scrape.yml                ← File you create
+└── automated_bob_scraper.py          ← Upload this file too
+```
+
+---
+
+## ✅ **VISUAL GUIDE:**
+
+**When typing the filename:**
+```
+Before typing:
+┌─────────────────────────────────┐
+│ Name your file...               │
+└─────────────────────────────────┘
+
+After typing ".github/workflows/scrape.yml":
+┌─────────────────────────────────┐
+│ .github / workflows / scrape.yml│  ← See the folders!
+└─────────────────────────────────┘
